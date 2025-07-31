@@ -17,11 +17,11 @@ Comparative study exploring how different image annotation tools affect the dete
 
 ## Annotation Tools Compared
 
-| Tool           | Output Format(s)     | Polygon Support | Export to YOLO | Notes                        |
-|----------------|----------------------|------------------|----------------|------------------------------|
-| **Roboflow**   | JSON, XML, YOLO      | ✔️               | Native         | Cloud-based, collaborative   |
-| **Makesense.ai** | YOLO, Pascal VOC   | ✔️               | Native         | No login required, fast UI   |
-| **VGG (VIA)**  | CSV                  | ✔️               | Manual         | Lightweight and offline-ready|
+| Tool             | Output Format(s)     | Polygon Support | Export to YOLO | Notes                        |
+|------------------|----------------------|------------------|----------------|------------------------------|
+| **Roboflow** [2] | JSON, XML, YOLO      | ✔️               | Native         | Cloud-based, collaborative   |
+| **Makesense.ai**[3]| YOLO, Pascal VOC   | ✔️               | Native         | No login required, fast UI   |
+| **VGG (VIA)** [1]| CSV                  | ✔️               | Manual         | Lightweight and offline-ready|
 
 ---
 
