@@ -126,9 +126,9 @@ Researcher in Computer Vision & Artificial Intelligence
 - VGG Image Annotator (VIA)
 - YOLOv12 Research Community
 
-
 ---
 - Sample annotated image visualizations for comparison
+
 
 
 ## References
