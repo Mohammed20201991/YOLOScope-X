@@ -129,3 +129,9 @@ Researcher in Computer Vision & Artificial Intelligence
 
 ---
 - Sample annotated image visualizations for comparison
+
+
+## References
+1-   [VGG(VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html)
+2-   [RobFlow](https://roboflow.com/)
+3-   [Makesense](https://www.makesense.ai/)
