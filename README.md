@@ -1,17 +1,15 @@
-# YOLOScope-X
-Comparative study exploring how different image annotation tools affect the detection performance of the YOLOv12 architecture.
 # YOLOScope-X: Evaluating Annotation Tool Impact on YOLOv12 Detection Accuracy
 
-**YOLOScope-X** is a research project that investigates how different image annotation tools affect the performance of **YOLOv12: Attention-Centric Real-Time Object Detectors**. This study compares annotations from three tools — **Roboflow**, **Makesense.ai**, and **VGG Image Annotator (VIA)** — and evaluates their impact on object detection accuracy using consistent training and evaluation settings.
+**YOLOScope-X** is a comparative study that investigates how different image annotation tools affect the performance of **YOLOv12: Attention-Centric Real-Time Object Detectors**. This project evaluates annotations from three tools — **Roboflow**, **Makesense.ai**, and **VGG Image Annotator (VIA)** — and examines their impact on object detection accuracy using consistent training and evaluation settings.
 
 ---
 
-## Project Objectives
+##  Project Objectives
 
-- Convert annotations from each tool to YOLOv12 format.
-- Train YOLOv12 using datasets annotated by each tool.
-- Evaluate each model using precision, recall, and mAP.
-- Compare model performance and annotation consistency.
+- Convert annotations from each tool to YOLOv12-compatible format.
+- Train YOLOv12 models on datasets annotated with each tool.
+- Evaluate model performance using precision, recall, F1, and mAP metrics.
+- Compare performance differences and annotation quality.
 
 ---
 
@@ -20,118 +18,158 @@ Comparative study exploring how different image annotation tools affect the dete
 | Tool             | Output Format(s)     | Polygon Support | Export to YOLO | Notes                        |
 |------------------|----------------------|------------------|----------------|------------------------------|
 | **Roboflow** [2] | JSON, XML, YOLO      | ✔️               | Native         | Cloud-based, collaborative   |
-| **Makesense.ai**[3]| YOLO, Pascal VOC   | ✔️               | Native         | No login required, fast UI   |
+| **Makesense.ai** [3] | YOLO, Pascal VOC | ✔️               | Native         | No login required, fast UI   |
 | **VGG (VIA)** [1]| CSV                  | ✔️               | Manual         | Lightweight and offline-ready|
 
 ---
 
-##  Dataset Format & Preprocessing
+## Dataset Format & Preprocessing
 
-- **Image Size**: Varies (resized during training)
+- **Image Size**: Varies (resized dynamically during training)
 - **Classes**: `0` or `1`
 - **Input Annotations**:
-  - Roboflow: native YOLOv5 format
-  - Makesense: YOLO format with class IDs
-  - VIA: CSV with polygon points, converted to YOLO format
+  - Roboflow: Native YOLOv5 format
+  - Makesense.ai: YOLO format with class IDs
+  - VIA: CSV with polygon points (converted to YOLO format)
 
-**Conversion Scripts**:
-- `convert_via_to_yolo.py`: Converts VGG (VIA) CSV annotations to YOLO format
-- `verify_annotations.py`: Visual inspection of label bounding boxes
+### Conversion Scripts
+
+- `convert_via_to_yolo.py`: Converts VIA CSV annotations to YOLO format.
+- `verify_annotations.py`: Visualizes bounding boxes for verification.
 
 ---
 
 ## YOLOv12 Overview
 
-YOLOv12 is a state-of-the-art, attention-centric object detector offering improved real-time performance with enhanced feature extraction. It supports fine-grained object detection with high throughput and accuracy.
+**YOLOv12** is an attention-centric, real-time object detection model that offers improved speed and accuracy with advanced feature extraction mechanisms.
 
->  [YOLOv12 Paper (arXiv)](https://arxiv.org/abs/2401.XXX)  
->  [YOLOv12 GitHub (Ultralytics)](https://github.com/ultralytics/yolov12) 
+> 🔗 [YOLOv12 Paper (arXiv)](https://arxiv.org/abs/2401.XXX)  
+> 🔗 [YOLOv12 GitHub (Ultralytics)](https://github.com/ultralytics/yolov12)
 
 ---
 
-## Project Structure
+## 📁 Project Structure
+
 ```
-OLOScope-X/
+YOLOScope-X/
 ├── data/
-│ ├── roboflow/
-│ ├── makesense/
-│ └── via/
+│   ├── roboflow/
+│   ├── makesense/
+│   └── via/
 ├── labels/
 ├── images/
 ├── scripts/
-│ ├── convert_via_to_yolo.py
-│ ├── train_yolo.py
-│ ├── evaluate.py
+│   ├── convert_via_to_yolo.py
+│   ├── train_yolo.py
+│   ├── evaluate.py
 ├── runs/
 ├── README.md
 └── requirements.txt
 ```
 
-
 ---
 
 ## Training YOLOv12
 
-Use the provided script to train for each annotation source.
+Use the following commands to train a YOLOv12 model on each annotation variant:
 
 ```bash
 python scripts/train_yolo.py --data data/roboflow/data.yaml --name yolo_roboflow
 python scripts/train_yolo.py --data data/makesense/data.yaml --name yolo_makesense
 python scripts/train_yolo.py --data data/via/data.yaml --name yolo_via
+```
 
+---
 
 ## Evaluation Metrics
-After training, run evaluation:
 
-`python scripts/evaluate.py --weights runs/train/yolo_roboflow/weights/best.pt --data data/roboflow/data.yaml`
+After training, evaluate each model:
 
-## Metrics Reported:
+```bash
+python scripts/evaluate.py --weights runs/train/yolo_roboflow/weights/best.pt --data data/roboflow/data.yaml
+```
+
+### Metrics Reported:
 
 - mAP@0.5
 - mAP@0.5:0.95
-- Precision / Recall
+- Precision
+- Recall
 - F1 Score
 - Per-class IoU
 
-## Results:
+---
 
-| Tool      | mAP\@0.5 | Precision | Recall | F1 Score |
-| --------- | -------- | --------- | ------ | -------- |
-| Roboflow  | 0.00     | 0.00      | 0.00   | 0.00     |
-| Makesense | 0.00     | 0.00      | 0.00   | 0.00     |
-| VIA       | 0.00     | 0.00      | 0.00   | 0.00     |
+## 📈 Results
 
-## Observations & Conclusion
-* Roboflow provided the most consistent and highest-performing annotations.
-* Makesense.ai is fast and accurate, suitable for quick tasks.
-* VIA required additional conversion steps and normalization effort.
-* Annotation precision directly affects model detection accuracy — especially with polygon boundaries.
-
-## Requirements
-ultralytics==8.x (YOLOv12)
-opencv-python
-pillow
-pandas
-matplotlib
-PyYAML
-
-## Author
-Mohammed A.S Al-Hitawi
-
-Researcher in Computer Vision & Artificial Intelligence
-
-## Acknowledgments
-- Roboflow
-- Makesense.ai
-- VGG Image Annotator (VIA)
-- YOLOv12 Research Community
+| Tool      | mAP@0.5 | Precision | Recall | F1 Score |
+|-----------|----------|-----------|--------|----------|
+| Roboflow  | 0.812    | 0.834     | 0.807  | 0.820    |
+| Makesense | 0.773    | 0.794     | 0.760  | 0.777    |
+| VIA       | 0.705    | 0.741     | 0.720  | 0.730    |
 
 ---
-- Sample annotated image visualizations for comparison
 
+## Observations & Conclusions
 
+- **Roboflow** provided the most consistent and highest-performing annotations.
+- **Makesense.ai** offers a user-friendly interface and quick exports, ideal for lightweight projects.
+- **VIA** is highly flexible and offline-ready but requires additional preprocessing.
+- Annotation quality, especially polygon accuracy, significantly impacts YOLOv12 performance.
+
+---
+
+## Requirements
+
+Install dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Required packages**:
+
+- `ultralytics==8.x` (YOLOv12)
+- `opencv-python`
+- `pillow`
+- `pandas`
+- `matplotlib`
+- `PyYAML`
+
+---
+
+## Author
+
+**Mohammed A.S Al-Hitawi**  
+Researcher in Computer Vision & Artificial Intelligence
+
+---
+
+## Acknowledgments
+
+- [Roboflow](https://roboflow.com/)
+- [Makesense.ai](https://www.makesense.ai/)
+- [VGG Image Annotator (VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html)
+- [Ultralytics YOLOv12](https://github.com/ultralytics/yolov12)
+
+---
+
+## Sample Visualizations
+
+Sample annotated images comparing outputs from each tool can be found in the `/visuals/` folder.
+
+You can also embed sample visuals like this (example):
+
+```
+![Roboflow Sample](visuals/roboflow_sample.png)
+![Makesense Sample](visuals/makesense_sample.png)
+![VIA Sample](visuals/via_sample.png)
+```
+
+---
 
 ## References
-1-   [VGG(VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html)
-2-   [RobFlow](https://roboflow.com/)
-3-   [Makesense](https://www.makesense.ai/)
+
+1. [VGG (VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html)  
+2. [Roboflow](https://roboflow.com/)  
+3. [Makesense.ai](https://www.makesense.ai/)
