@@ -173,3 +173,22 @@ You can also embed sample visuals like this (example):
 1. [VGG (VIA)](https://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html)  
 2. [Roboflow](https://roboflow.com/)  
 3. [Makesense.ai](https://www.makesense.ai/)
+
+
+
+
+## 📌 Citation
+
+If you use this project or any part of the findings in your work, please cite it as:
+
+```
+@misc{alhitawi2025yoloscopex,
+  author       = {Mohammed A.S. Al-Hitawi},
+  title        = {YOLOScope-X: Evaluating Annotation Tool Impact on YOLOv12 Detection Accuracy},
+  year         = {2025},
+  howpublished = {GitHub},
+  email        = {al_hitawe@uofallujah.edu.iq}
+  note         = {Comparative study on annotation tools and their impact on YOLOv12},
+  url          = {https://github.com/Mohammed20201991/YOLOScope-X}
+}
+```
